@@ -2,7 +2,7 @@
 
 **[English](./README.md)**
 
-> 你的 AI 编程助手一直在跑偏、改你没让它改的东西、或者没跑一个测试就说"完成了"。code-harness 在配置层解决这个问题——不靠每次会话都要重复的 prompt。
+> 你的 AI 编程助手一直在跑偏、改你没让它改的东西、或者没跑一个测试就说"完成"。code-harness 在配置层解决这个问题——不靠每次会话都要重复的 prompt。
 
 一个适用于 Claude Code 和 Codex 的 drop-in 配置包，强制执行结构化开发工作流、会话纪律和跨会话记忆。通过将经过验证的原则打包成 `CLAUDE.md` / `AGENTS.md` 文件和自动激活的 skill 来实现——无需插件，无需安装脚本。
 
@@ -14,7 +14,7 @@
 
 - **目标漂移** — 处理复杂任务到一半，agent 忘了它在做什么
 - **范围蔓延** — 让它修一个 bug，却改了不相关的代码
-- **虚报完成** — 没跑类型检查或测试就说"完成了"
+- **虚报完成** — 没跑类型检查或测试就说"完成"
 - **循环浪费** — 用同一种错误方法反复修改同一个文件
 - **上下文膨胀** — 过期的调试记录填满上下文，让一切变慢
 - **记忆丢失** — 每次新会话都在纠正同一个错误，因为什么都没记录
@@ -28,7 +28,7 @@
 把一个文件放到你的 agent 配置目录里。这就是全部安装步骤。
 
 这个文件包含：
-- **工作流路由** — 清晰任务走快速通道，复杂任务走完整通道（设计 → 计划 → TDD → 验证 → review）
+- **工作流路径** — 清晰任务走快速通道，复杂任务走完整通道（需求 → 计划 → TDD → 验证 → review）
 - **Karpathy 编码规则** — 动手前先想、只做外科手术式修改、简单优先
 - **Harness 工程** — `todo.md` 目标追踪、循环检测（改了 3 次 → 停下换思路）、声明完成前的验证门控
 - **记忆指导** — 跨会话值得记录的内容：纠正、错误模式、用户偏好；不值得记的：代码结构、git 历史
@@ -44,16 +44,16 @@
 
 | Agent | 操作 |
 |-------|------|
-| **Claude Code** | 复制 `CLAUDE.md` → `~/.claude/CLAUDE.md` |
-| **Codex** | 复制 `AGENTS.md` → 项目根目录 |
-| **Cursor / 其他** | 复制 `skills/` → agent 的 skills 目录 |
+| **Claude Code** | 复制 `CLAUDE.md` 到 `~/.claude/CLAUDE.md` |
+| **Codex** | 复制 `AGENTS.md` 到项目根目录 |
+| **Cursor / 其他** | 复制 `skills/` 到 agent 的 skills 目录 |
 
 无需插件，无需脚本，复制一个文件即可。
 
 **推荐先 clone（方便后续更新）：**
 
 ```bash
-git clone https://github.com/code-harness/code-harness ~/.claude/code-harness
+git clone https://github.com/theosunny/code-harness ~/.claude/code-harness
 
 # Claude Code
 cp ~/.claude/code-harness/CLAUDE.md ~/.claude/CLAUDE.md
@@ -65,7 +65,7 @@ cp ~/.claude/code-harness/AGENTS.md ./AGENTS.md
 **Windows（PowerShell）：**
 
 ```powershell
-git clone https://github.com/code-harness/code-harness "$env:USERPROFILE\.claude\code-harness"
+git clone https://github.com/theosunny/code-harness "$env:USERPROFILE\.claude\code-harness"
 
 # Claude Code
 Copy-Item "$env:USERPROFILE\.claude\code-harness\CLAUDE.md" "$env:USERPROFILE\.claude\CLAUDE.md"
@@ -91,7 +91,7 @@ agent 记录跨会话值得保留的内容：
 - **偏好** — 沟通风格、代码风格、你认为什么叫完成
 
 ### 上下文卫生
-- 系统提示里不包含时间戳（破坏 KV-cache，10 倍成本差）
+- 系统提示里不包含时间戳（破坏 KV-cache，10 倍成本差距）
 - 指令文件保持轻量；一个阶段完成后 `/compact`
 - 任务切换时开新会话，不混入无关工作
 
