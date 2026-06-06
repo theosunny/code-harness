@@ -1,12 +1,8 @@
-# code-harness — Agent Instructions
-
-This file embeds the code-harness workflow and harness engineering principles for agents that use AGENTS.md (OpenAI Codex, and other compatible agents).
-
 ## Development Workflow
 
 ### Two Paths
 
-**Fast path** (clear, well-scoped features): use a 7-phase guided workflow — explore codebase, clarify requirements, design architecture, implement, review.
+**Fast path** (clear, well-scoped features): explore codebase → clarify requirements → design architecture → implement → test → review.
 
 **Deliberate path** (architecture decisions, multi-system changes):
 1. Clarify requirements through dialogue before writing any code

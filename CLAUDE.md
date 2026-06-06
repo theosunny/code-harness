@@ -1,6 +1,8 @@
 # code-harness
 
-This is a drop-in `CLAUDE.md` for Claude Code. Copy it to `~/.claude/CLAUDE.md` (global) or your project root.
+This is a drop-in `CLAUDE.md` for Claude Code. Copy to `~/.claude/CLAUDE.md` (global) or project root.
+
+---
 
 ## Development Workflow
 
@@ -41,7 +43,7 @@ Create a `todo.md` at the start of any multi-step task. Update after each step. 
 - On retry: append a failure summary, do not clear context
 
 ### Context Management
-- Compact (`/compact`) or start a new session when switching to unrelated work
+- Use `/compact` or start a new session when switching to unrelated work
 - Keep this file under 60 lines — use `@`-imports for larger content
 - Don't pre-install tools speculatively; performance degrades above 15–30 tools
 
