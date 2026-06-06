@@ -2,15 +2,18 @@
 
 ### Two Paths
 
-**Fast path** (clear, well-scoped features): explore codebase → clarify requirements → design architecture → implement → test → review.
+**Fast path** — clear scope, touches ≤3 files, no new dependencies:
+Explore codebase → clarify any blockers → implement → verify (type-check + tests) → ship.
 
-**Deliberate path** (architecture decisions, multi-system changes):
+**Deliberate path** — architecture decisions, new dependencies, or changes touching 4+ files:
 1. Clarify requirements through dialogue before writing any code
 2. Produce a written spec/design document
 3. Generate a step-by-step implementation plan
 4. Write tests first, then implementation
-5. Verify before claiming done — run type-check + critical path tests
+5. Verify before claiming done — type-check + critical path tests pass
 6. Review code before merging
+
+When in doubt, ask the user which path to take.
 
 ### Key Rules
 
@@ -29,7 +32,7 @@
 ## Harness Engineering
 
 ### Goal Tracking
-Create a `todo.md` at the start of any multi-step task. Update after each step. Delete when done. This prevents goal drift in long sessions.
+For any task with 3+ steps: create `todo.md` after requirements are confirmed, update after each step, delete when done. Don't create it before the task is clear.
 
 ### Back-pressure
 - Run a minimal verification set before claiming done (type-check + critical path tests only)
@@ -53,6 +56,7 @@ No built-in memory system. Maintain a `## Memory` section at the bottom of this 
 - User corrects your approach — add to `### Corrections` with the reason
 - Same mistake made twice — add to `### Error patterns`
 - Non-obvious approach confirmed by user — add to `### Validated approaches`
+- **Don't append** when the session just started and nothing has happened yet
 
 **Format:**
 ```

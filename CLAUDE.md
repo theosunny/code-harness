@@ -2,19 +2,22 @@
 
 ### Two Paths
 
-**Fast path** (clear, well-scoped features): explore → clarify → implement → verify → ship.
+**Fast path** — clear scope, touches ≤3 files, no new dependencies:
+Explore codebase → clarify any blockers → implement → verify (type-check + tests) → ship.
 
-**Deliberate path** (architecture decisions, multi-system changes):
+**Deliberate path** — architecture decisions, new dependencies, or changes touching 4+ files:
 1. Clarify requirements through dialogue before writing any code
 2. Produce a written spec/design document
 3. Generate a step-by-step implementation plan
 4. Write tests first, then implementation
-5. Verify before claiming done — run type-check + critical path tests
+5. Verify before claiming done — type-check + critical path tests pass
 6. Review code before merging
+
+When in doubt, ask the user which path to take.
 
 ### Key Rules
 
-- Bug encountered → diagnose root cause systematically before patching
+- Bug encountered → diagnose root cause first, never guess-and-patch
 - Receiving review feedback → evaluate technically before implementing
 - 2+ independent tasks → work in parallel where possible
 - Feature needs isolation → use git worktrees
@@ -29,7 +32,7 @@
 ## Harness Engineering
 
 ### Goal Tracking
-Create a `todo.md` at the start of any multi-step task. Update after each step. Delete when done. This prevents goal drift in long sessions.
+For any task with 3+ steps: create `todo.md` after requirements are confirmed, update after each step, delete when done. Don't create it before the task is clear.
 
 ### Back-pressure
 - Run a minimal verification set before claiming done (type-check + critical path tests only)
@@ -47,17 +50,32 @@ Create a `todo.md` at the start of any multi-step task. Update after each step. 
 
 ## Memory
 
-Use the built-in memory system at `~/.claude/projects/<project-hash>/memory/`.
+Claude Code manages memory files automatically at `~/.claude/projects/<hash>/memory/` — the hash is handled by the system, you don't need to know it. Write files there using the Write tool.
 
 **Write a memory when:**
 - User corrects your approach — save immediately with the reason (`type: feedback`)
 - Same mistake made twice — second occurrence is the trigger (`type: feedback`)
-- Non-obvious approach confirmed by user — save as validated choice (`type: feedback`)
-- Learn something about user role, preferences, or context (`type: user`)
+- User confirms a non-obvious approach worked (`type: feedback`)
+- You learn something about the user's role, preferences, or working style (`type: user`)
 
 **Don't write:**
-- Code structure or file paths — read the current code
-- Session activity — that's git history
-- Anything already in CLAUDE.md
+- When the session just started and nothing has happened yet
+- Code structure or file paths — read the current code instead
+- What happened this session — that's git history
+- Anything already documented in CLAUDE.md
 
-Each memory: one `.md` file with frontmatter (`name`, `description`, `type`), one-sentence rule, `Why:` line, `Apply when:` line. Update `MEMORY.md` index after each write.
+**File format:**
+```markdown
+---
+name: short-kebab-slug
+description: one-line summary
+type: feedback | user | project | reference
+---
+
+[One-sentence rule]
+
+Why: [reason or incident]
+Apply when: [context where this matters]
+```
+
+After writing a memory file, add one line to `MEMORY.md` index: `- [Title](filename.md) — brief hook`.

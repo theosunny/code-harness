@@ -8,7 +8,7 @@ version: 1.0.0
 
 ## Goal Tracking: todo.md Pattern
 
-Create a `todo.md` at the start of any multi-step task. Update it after each step. This re-injects the current goal into the end of the context window (where attention is strongest), preventing goal drift in long conversations. Delete it when the task is complete.
+For any task with 3+ steps: create `todo.md` **after requirements are confirmed**, update after each step, delete when done. Don't create it before the task scope is clear — a premature todo.md will be too vague to anchor attention.
 
 ## Back-pressure Mechanisms
 
