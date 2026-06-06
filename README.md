@@ -6,6 +6,8 @@
 
 A plugin/skill pack that embeds **harness engineering principles** and a **full software development lifecycle** directly into your AI coding agent — so every session starts structured, stays on track, and finishes verified.
 
+*"Harness" here means a behavioral constraint system, not a test harness — think horse harness, not test runner.*
+
 Works with Claude Code, Cursor, OpenCode, Codex, and Gemini CLI.
 
 ---
@@ -84,7 +86,7 @@ fast-harness orchestrates [superpowers](https://github.com/obra/superpowers) and
 When the agent is stuck, it surfaces the signal to you — it doesn't decide which model to use. Model selection belongs to the developer, not the agent.
 
 **Progressive disclosure**
-Skills load on demand via the `Skill` tool. No context bloat from loading everything upfront.
+Skills load on demand. No context bloat from loading everything upfront.
 
 ---
 
@@ -104,6 +106,8 @@ Skills load on demand via the `Skill` tool. No context bloat from loading everyt
 ## Installation
 
 ### Claude Code
+
+> The skills, slash commands (`/feature-dev`, `/commit`, etc.), and memory system in this section are **Claude Code-specific**. Other platforms use different mechanisms — see their sections below.
 
 **Step 1 — Install the workflow engine and companion plugins:**
 
@@ -132,7 +136,7 @@ claude plugin install fast-harness
 
 **Step 3 — Set up your user-level CLAUDE.md:**
 
-Create `~/.claude/CLAUDE.md` with progressive imports (keeps context load under 60 lines):
+Create `~/.claude/CLAUDE.md` (macOS/Linux) or `%USERPROFILE%\.claude\CLAUDE.md` (Windows):
 
 ```markdown
 # Global Configuration
@@ -146,6 +150,7 @@ See `examples/claude-md/` in this repo for the full file templates.
 
 **Step 4 — Initialize each new project:**
 
+In any project, run:
 ```
 /recommend-automations
 ```
@@ -156,82 +161,116 @@ Analyzes your project and suggests project-specific hooks, MCP servers, and addi
 
 ### Cursor
 
-**Prerequisites:** Install superpowers for Cursor first — see [superpowers setup](https://github.com/obra/superpowers).
+Cursor uses a skills directory, not a plugin registry. Skills placed in `~/.cursor/skills/` are available across all your projects; skills in `.cursor/skills/` (project root) are project-scoped.
+
+**macOS / Linux:**
 
 ```bash
-git clone https://github.com/fast-harness/fast-harness ~/.cursor/plugins/fast-harness
+mkdir -p ~/.cursor/skills
+git clone https://github.com/fast-harness/fast-harness /tmp/fast-harness
+cp -r /tmp/fast-harness/skills/workflow-guide ~/.cursor/skills/
+cp -r /tmp/fast-harness/skills/harness-engineering ~/.cursor/skills/
+cp -r /tmp/fast-harness/skills/tools-reference ~/.cursor/skills/
 ```
 
-Add to your Cursor settings (`~/.cursor/settings.json` or project-level):
+**Windows (PowerShell):**
 
-```json
-{
-  "plugins": ["~/.cursor/plugins/fast-harness"]
-}
+```powershell
+$skillsDir = "$env:USERPROFILE\.cursor\skills"
+New-Item -ItemType Directory -Force -Path $skillsDir
+$tmp = "$env:TEMP\fast-harness"
+git clone https://github.com/fast-harness/fast-harness $tmp
+Copy-Item "$tmp\skills\workflow-guide" -Destination $skillsDir -Recurse -Force
+Copy-Item "$tmp\skills\harness-engineering" -Destination $skillsDir -Recurse -Force
+Copy-Item "$tmp\skills\tools-reference" -Destination $skillsDir -Recurse -Force
+Remove-Item $tmp -Recurse -Force
+```
+
+Skills are auto-discovered by Cursor on next launch. No settings.json changes needed.
+
+**Keep skills up to date:**
+
+```bash
+# macOS / Linux
+cd /tmp && git clone https://github.com/fast-harness/fast-harness fh-update
+cp -r fh-update/skills/workflow-guide ~/.cursor/skills/
+cp -r fh-update/skills/harness-engineering ~/.cursor/skills/
+cp -r fh-update/skills/tools-reference ~/.cursor/skills/
+rm -rf fh-update
 ```
 
 ---
 
 ### OpenCode
 
-Add to `opencode.json` (global `~/.config/opencode/opencode.json` or project-level):
+Add to `opencode.json`. On **macOS/Linux** this is `~/.config/opencode/opencode.json`; on **Windows** it is `%USERPROFILE%\.config\opencode\opencode.json` or `%APPDATA%\OpenCode\opencode.json`.
 
 ```json
 {
+  "$schema": "https://opencode.ai/config.json",
   "plugin": ["fast-harness@git+https://github.com/fast-harness/fast-harness.git"]
 }
 ```
 
 Restart OpenCode. Skills auto-register and activate based on task context.
 
+> If your OpenCode version doesn't support the `plugin` field yet, use the AGENTS.md fallback below.
+
 ---
 
 ### Codex (OpenAI)
 
+Codex auto-discovers skills placed in `~/.codex/skills/`.
+
 **macOS / Linux:**
 
 ```bash
-# Clone the repo
-git clone https://github.com/fast-harness/fast-harness ~/.codex/fast-harness
-
-# Link skills for auto-discovery
-mkdir -p ~/.agents/skills
-ln -s ~/.codex/fast-harness/skills ~/.agents/skills/fast-harness
+mkdir -p ~/.codex/skills
+git clone https://github.com/fast-harness/fast-harness /tmp/fast-harness
+cp -r /tmp/fast-harness/skills/workflow-guide ~/.codex/skills/
+cp -r /tmp/fast-harness/skills/harness-engineering ~/.codex/skills/
+cp -r /tmp/fast-harness/skills/tools-reference ~/.codex/skills/
+rm -rf /tmp/fast-harness
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-git clone https://github.com/fast-harness/fast-harness "$env:USERPROFILE\.codex\fast-harness"
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
-cmd /c mklink /J "$env:USERPROFILE\.agents\skills\fast-harness" "$env:USERPROFILE\.codex\fast-harness\skills"
+$skillsDir = "$env:USERPROFILE\.codex\skills"
+New-Item -ItemType Directory -Force -Path $skillsDir
+$tmp = "$env:TEMP\fast-harness"
+git clone https://github.com/fast-harness/fast-harness $tmp
+Copy-Item "$tmp\skills\workflow-guide" -Destination $skillsDir -Recurse -Force
+Copy-Item "$tmp\skills\harness-engineering" -Destination $skillsDir -Recurse -Force
+Copy-Item "$tmp\skills\tools-reference" -Destination $skillsDir -Recurse -Force
+Remove-Item $tmp -Recurse -Force
 ```
 
 Restart Codex. Skills are discovered automatically.
 
 **Update:**
 
-```bash
-cd ~/.codex/fast-harness && git pull
-```
+Re-run the install commands above (they use `-Force` / overwrite, safe to repeat).
 
 ---
 
 ### Gemini CLI
 
-**Option A — Append to existing GEMINI.md:**
+**macOS / Linux — Option A (append to existing GEMINI.md):**
 
 ```bash
-cat GEMINI.md >> ~/.gemini/GEMINI.md
+git clone https://github.com/fast-harness/fast-harness /tmp/fast-harness
+cat /tmp/fast-harness/GEMINI.md >> ~/.gemini/GEMINI.md
+rm -rf /tmp/fast-harness
 ```
 
-**Option B — Clone and reference directly:**
+**macOS / Linux — Option B (clone and reference via `@` imports):**
 
 ```bash
 git clone https://github.com/fast-harness/fast-harness ~/.config/fast-harness
 ```
 
-Then add to your `~/.gemini/GEMINI.md`:
+Add to `~/.gemini/GEMINI.md`:
 
 ```
 @~/.config/fast-harness/skills/workflow-guide/SKILL.md
@@ -239,11 +278,24 @@ Then add to your `~/.gemini/GEMINI.md`:
 @~/.config/fast-harness/skills/tools-reference/SKILL.md
 ```
 
+**Windows (PowerShell) — Option B:**
+
+```powershell
+$dir = "$env:USERPROFILE\.config\fast-harness"
+git clone https://github.com/fast-harness/fast-harness $dir
+# Add these lines to %USERPROFILE%\.gemini\GEMINI.md:
+# @$dir\skills\workflow-guide\SKILL.md
+# @$dir\skills\harness-engineering\SKILL.md
+# @$dir\skills\tools-reference\SKILL.md
+```
+
+> Note: `~` in Gemini CLI `@` imports resolves to `$HOME` on macOS/Linux. On Windows use the full path.
+
 ---
 
 ### Any Agent (AGENTS.md)
 
-Copy `AGENTS.md` to your project root. This file contains all three skill principles inlined — no plugin discovery needed, works with any agent that reads `AGENTS.md` at session start.
+Copy `AGENTS.md` to your project root. All three skill principles are inlined — no plugin discovery needed. Works with any agent that reads `AGENTS.md` at session start (Codex, Gemini, custom agents).
 
 ```bash
 cp AGENTS.md /path/to/your/project/AGENTS.md
@@ -257,22 +309,21 @@ cp AGENTS.md /path/to/your/project/AGENTS.md
 # Claude Code
 claude plugin update fast-harness
 
-# All other platforms — pull the repo
-cd ~/.codex/fast-harness && git pull   # adjust path for your platform
+# Cursor / Codex — re-run the install commands (safe to repeat, uses overwrite)
+
+# Gemini CLI Option B
+cd ~/.config/fast-harness && git pull
 ```
 
 ---
 
 ## How It Works
 
-fast-harness works through the **skill system** in Claude Code (and equivalents on other platforms). At session start, the `using-superpowers` skill is injected, which teaches the agent to invoke relevant skills before responding to any task. The three fast-harness skills are then loaded on demand — not all at once.
+fast-harness works through the **skill system** in each platform. At session start, skills are discovered and their descriptions are scanned. When a task matches a skill's trigger conditions, the full skill content loads on demand.
 
-This means:
-- Zero context overhead when skills aren't needed
-- Full guidance loaded exactly when relevant
-- Skills compose with superpowers and official plugins rather than replacing them
+The `harness-engineering` skill implements **back-pressure** — mechanisms that resist the natural tendency of long AI sessions to drift, loop, or hallucinate completion. The `workflow-guide` skill ensures the agent picks the right process path before touching any code.
 
-The `harness-engineering` skill in particular implements **back-pressure** — mechanisms that resist the natural tendency of long AI sessions to drift, loop, or hallucinate completion. This is the core insight: AI sessions need the same kind of engineering discipline as software systems.
+The skills are plain markdown files — readable, forkable, and improvable without any build step.
 
 ---
 
@@ -281,9 +332,9 @@ The `harness-engineering` skill in particular implements **back-pressure** — m
 PRs welcome. Key areas:
 - New platform support (Windsurf, Amp, Continue, etc.)
 - Skill improvements based on real session failures
-- Example CLAUDE.md / AGENTS.md configurations for specific tech stacks
+- Example CLAUDE.md / AGENTS.md configurations for specific stacks
 
-Please keep skills concise — token efficiency matters (see harness-engineering principle: >15 tools degrades performance, >30 is noticeably worse).
+Please keep skills concise — token efficiency matters (skills above 500 lines load slower and crowd out context).
 
 ---
 
