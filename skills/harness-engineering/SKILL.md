@@ -1,6 +1,6 @@
 ---
 name: harness-engineering
-description: Use when managing context length, deciding whether to compact or start a new session, experiencing goal drift in long conversations, hitting repeated loops, or deciding whether to upgrade the model.
+description: Use when managing context length, deciding whether to compact or start a new session, experiencing goal drift in long conversations, or hitting repeated loops.
 version: 1.0.0
 ---
 
@@ -32,10 +32,11 @@ Create a `todo.md` at the start of any multi-step task. Update it after each ste
 - Actively debugging — failure evidence is still needed
 - `todo.md` still has incomplete steps
 
-## Model Upgrade Signals
+## When the Current Model Isn't Enough
 
-- Same problem attempted 2+ times by Sonnet without progress → upgrade to Opus
-- Complex architecture decisions or multi-file reasoning required → Opus for planning, Sonnet for execution
+If the same problem has been attempted multiple times without progress, or the task requires complex multi-file reasoning that isn't resolving — **tell the user**. Don't silently retry the same approach. Surface the signal: describe what's stuck and why, so the user can decide whether to switch models, restructure the task, or take a different approach.
+
+The decision of which model to use belongs to the user, not the agent.
 
 ## Context Hygiene
 
