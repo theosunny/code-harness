@@ -50,3 +50,20 @@ Create a `todo.md` at the start of any multi-step task. Update after each step. 
 ### Architecture Judgment
 - Let AI handle: classification, drafting, summarization, unstructured text extraction
 - Use deterministic code for: data fetching, routing, filtering, persistence
+
+## Memory
+
+Use the built-in memory system at `~/.claude/projects/<project-hash>/memory/`.
+
+**Write a memory when:**
+- User corrects your approach — save immediately with the reason (`type: feedback`)
+- Same mistake made twice — second occurrence is the trigger (`type: feedback`)
+- Non-obvious approach confirmed by user — save as validated choice (`type: feedback`)
+- Learn something about user role, preferences, or context (`type: user`)
+
+**Don't write:**
+- Code structure or file paths — read the current code
+- Session activity — that's git history
+- Anything already in CLAUDE.md
+
+Each memory: one `.md` file with frontmatter (`name`, `description`, `type`), one-sentence rule, `Why:` line, `Apply when:` line. Update `MEMORY.md` index after each write.

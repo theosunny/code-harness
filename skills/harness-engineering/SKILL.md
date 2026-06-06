@@ -16,41 +16,70 @@ Create a `todo.md` at the start of any multi-step task. Update it after each ste
 - **Loop detection** — if the same file has been edited 3+ times without resolution, stop, re-read `todo.md`, try a different approach
 - **Preserve failure evidence** — on retry, append a failure summary and "do not repeat this approach" rather than clearing context
 
-## Memory: What to Remember Across Sessions
+## Memory: How to Remember Across Sessions
 
-Not everything belongs in memory. The signal worth keeping is what was *surprising* or *non-obvious* — corrections, validated choices, recurring patterns.
+### Claude Code
 
-**Save when:**
-- User corrects your approach ("don't do X", "stop doing Y") — this is the most important category
-- A non-obvious approach worked and the user confirmed it ("yes, exactly like that")
-- The same mistake happens twice — the second occurrence is a signal to write it down
-- User states an explicit preference that affects future work
+Claude Code has a built-in file-based memory system. Use it actively.
 
-**Don't save:**
-- Code patterns, file structure, architecture — read the current code instead
-- What you did in this session — that's git history
-- Anything already in CLAUDE.md or the project docs
+**Storage location:** `~/.claude/projects/<project-hash>/memory/`  
+Each memory is a separate `.md` file. `MEMORY.md` is the index — one line per entry.
 
-**Memory format** (save to `~/.claude/memory/` or equivalent):
-
+**File format:**
 ```markdown
 ---
+name: short-kebab-slug
+description: one-line summary used to decide relevance in future sessions
 type: feedback | user | project | reference
 ---
 
 [The rule or fact — one clear sentence]
 
-Why: [the reason the user gave, or the incident that surfaced it]
-Apply when: [the specific context where this matters]
+Why: [the reason or incident that surfaced it]
+Apply when: [the context where this matters]
 ```
 
-**Three memory types that matter most:**
+**MEMORY.md index format:**
+```markdown
+# Memory Index
 
-1. **Feedback** — corrections and validated choices. "Don't mock the database in tests — real integration tests only." Save the why so you can judge edge cases later.
+- [Title](filename.md) — one-line hook under 150 chars
+```
 
-2. **Error patterns** — if you made the same mistake twice, write down what the mistake was and the correct approach. This is the HermesAgent insight: agents that log their own failure patterns stop repeating them.
+**When to write a memory:**
+- User corrects your approach → write immediately as `type: feedback`
+- Same mistake made twice → second occurrence is the signal; write `type: feedback` with the error pattern
+- User confirms a non-obvious choice worked → write as `type: feedback` (validated approach)
+- You learn something about the user's role, preferences, or context → write as `type: user`
+- Project-specific decisions, constraints, deadlines → write as `type: project`
 
-3. **User preferences** — communication style, code style, what they consider done vs not done.
+**When NOT to write:**
+- Code patterns or file structure — read the current code instead
+- What happened in this session — that's git history
+- Anything already documented in CLAUDE.md or project docs
+
+**Reading memories:** At session start, read `MEMORY.md` index first. Load individual files only when relevant to the current task. Don't bulk-load everything.
+
+### Codex / Other Agents
+
+No built-in memory system. Use `AGENTS.md` in the project root as persistent state.
+
+Append a `## Memory` section to the project's `AGENTS.md`:
+
+```markdown
+## Memory
+
+### Corrections
+- [date] Don't mock the database in tests — use real integration tests. Reason: mocks masked a broken migration.
+
+### Error patterns
+- [date] Checked if path exists before reading — should use try/catch instead (ENOENT is not always an error).
+
+### Preferences
+- Respond in Chinese; code and comments in English.
+```
+
+This is manual but durable — it survives session resets and is visible in the repo.
 
 ## Context Management: When to Compact / New Session
 

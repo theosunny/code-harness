@@ -44,3 +44,28 @@ Create a `todo.md` at the start of any multi-step task. Update after each step. 
 ### Architecture Judgment
 - Let AI handle: classification, drafting, summarization, unstructured text extraction
 - Use deterministic code for: data fetching, routing, filtering, persistence
+
+## Memory
+
+No built-in memory system. Maintain a `## Memory` section at the bottom of this `AGENTS.md` file as persistent state across sessions.
+
+**Append when:**
+- User corrects your approach — add to `### Corrections` with the reason
+- Same mistake made twice — add to `### Error patterns`
+- Non-obvious approach confirmed by user — add to `### Validated approaches`
+
+**Format:**
+```
+## Memory
+
+### Corrections
+- [YYYY-MM-DD] Don't do X. Reason: Y.
+
+### Error patterns
+- [YYYY-MM-DD] Mistake: X. Correct approach: Y.
+
+### Preferences
+- Respond in Chinese; code and comments in English.
+```
+
+At session start: read the Memory section before doing anything else.
