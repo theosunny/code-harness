@@ -65,7 +65,7 @@ No built-in memory system. Maintain a `## Memory` section at the bottom of this 
 - [YYYY-MM-DD] Mistake: X. Correct approach: Y.
 
 ### Preferences
-- Respond in Chinese; code and comments in English.
+- [add your own preferences here]
 ```
 
 At session start: read the Memory section before doing anything else.

@@ -76,7 +76,7 @@ Append a `## Memory` section to the project's `AGENTS.md`:
 - [date] Checked if path exists before reading — should use try/catch instead (ENOENT is not always an error).
 
 ### Preferences
-- Respond in Chinese; code and comments in English.
+- [add your own preferences here]
 ```
 
 This is manual but durable — it survives session resets and is visible in the repo.
