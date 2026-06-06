@@ -1,0 +1,10 @@
+{
+  "name": "fast-harness",
+  "displayName": "Fast Harness",
+  "description": "Full-lifecycle development workflow with harness engineering principles. Three auto-activating skills: workflow-guide, harness-engineering, tools-reference.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/fast-harness/fast-harness",
+  "repository": "https://github.com/fast-harness/fast-harness",
+  "license": "MIT",
+  "keywords": ["workflow", "harness-engineering", "productivity"]
+}

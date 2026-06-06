@@ -1,47 +1,47 @@
 # fast-harness
 
-[中文文档](./README.zh.md)
+[English](./README.md)
 
-A Claude Code plugin that embeds harness engineering principles and a full development lifecycle workflow into three auto-activating skills. Built on [superpowers](https://github.com/obra/superpowers) and official Claude Code plugins — no reinvention.
+一个 Claude Code 插件，将 harness engineering 原则和完整的开发生命周期工作流内嵌为三个自动激活的 skill。基于 [superpowers](https://github.com/obra/superpowers) 和官方 Claude Code 插件构建，不重复造轮子。
 
-## What's Included
+## 包含的内容
 
-| Skill | Activates when |
-|-------|---------------|
-| **workflow-guide** | Starting any feature, task, or project |
-| **harness-engineering** | Managing context, hitting loops, deciding when to compact or upgrade model |
-| **tools-reference** | Looking up which command or plugin to use |
+| Skill | 激活时机 |
+|-------|----------|
+| **workflow-guide** | 开始任何功能、任务或项目时 |
+| **harness-engineering** | 管理上下文、遇到循环、决定何时压缩或升级模型时 |
+| **tools-reference** | 查询该用哪个命令或插件时 |
 
-## Philosophy
+## 设计理念
 
-- **Harness over prompting** — configuration shapes agent behavior more reliably than one-shot instructions
-- **Progressive disclosure** — skills load on demand, not all at once (no context bloat)
-- **Don't reinvent wheels** — orchestrates superpowers + official plugins rather than duplicating them
-- **Karpathy discipline** — think before coding, simplicity first, surgical changes, goal-driven execution
+- **配置优于提示** — harness 配置比一次性 prompt 更可靠地塑造 AI 行为
+- **渐进式加载** — skill 按需加载，不会污染上下文
+- **不重复造轮子** — 编排 superpowers 和官方插件，而非重复它们
+- **Karpathy 编码纪律** — 动手前先想、简单优先、外科手术式修改、目标驱动执行
 
-## Supported Platforms
+## 支持的平台
 
-| Platform | Install |
-|----------|---------|
+| 平台 | 安装方式 |
+|------|---------|
 | Claude Code | [→ Claude Code](#claude-code) |
 | Cursor | [→ Cursor](#cursor) |
 | OpenCode | [→ OpenCode](#opencode) |
 | Codex (OpenAI) | [→ Codex](#codex-openai) |
 | Gemini CLI | [→ Gemini CLI](#gemini-cli) |
-| Any agent (AGENTS.md) | Copy `AGENTS.md` to your project root |
+| 任意 Agent | 复制 `AGENTS.md` 到项目根目录 |
 
 ---
 
 ## Claude Code
 
-### Prerequisites
+### 安装前置依赖
 
 ```bash
-# 1. Core workflow engine
+# 1. 核心工作流引擎
 claude plugin marketplace add superpowers-dev https://github.com/obra/superpowers
 claude plugin install superpowers@superpowers-dev
 
-# 2. Companion plugins
+# 2. 配套插件
 claude plugin install feature-dev@claude-plugins-official
 claude plugin install frontend-design@claude-plugins-official
 claude plugin install code-review@claude-plugins-official
@@ -52,7 +52,7 @@ claude plugin install claude-md-management@claude-plugins-official
 claude plugin install claude-code-setup@claude-plugins-official
 ```
 
-### Install
+### 安装
 
 ```bash
 claude plugin marketplace add fast-harness https://github.com/fast-harness/fast-harness
@@ -63,19 +63,17 @@ claude plugin install fast-harness
 
 ## Cursor
 
-### Prerequisites
+### 前置依赖
 
-Install superpowers for Cursor first — see [superpowers Cursor setup](https://github.com/obra/superpowers).
+先安装 superpowers for Cursor，参考 [superpowers Cursor 安装说明](https://github.com/obra/superpowers)。
 
-### Install
-
-Clone this repo and add it as a Cursor plugin:
+### 安装
 
 ```bash
 git clone https://github.com/fast-harness/fast-harness ~/.cursor/plugins/fast-harness
 ```
 
-Then add to your Cursor settings:
+在 Cursor 设置中添加：
 ```json
 {
   "plugins": ["~/.cursor/plugins/fast-harness"]
@@ -86,9 +84,7 @@ Then add to your Cursor settings:
 
 ## OpenCode
 
-### Install
-
-Add to your `opencode.json` (global `~/.config/opencode/opencode.json` or project-level):
+在 `opencode.json`（全局 `~/.config/opencode/opencode.json` 或项目级）中添加：
 
 ```json
 {
@@ -96,46 +92,44 @@ Add to your `opencode.json` (global `~/.config/opencode/opencode.json` or projec
 }
 ```
 
-Restart OpenCode. Skills auto-register.
+重启 OpenCode，skill 自动注册。
 
 ---
 
 ## Codex (OpenAI)
 
-### Install
-
 ```bash
-# 1. Clone the repo
+# 1. 克隆仓库
 git clone https://github.com/fast-harness/fast-harness ~/.codex/fast-harness
 
-# 2. Link skills for auto-discovery
+# 2. 链接 skills 目录供自动发现
 mkdir -p ~/.agents/skills
 ln -s ~/.codex/fast-harness/skills ~/.agents/skills/fast-harness
 ```
 
-**Windows (PowerShell):**
+**Windows (PowerShell)：**
 ```powershell
 git clone https://github.com/fast-harness/fast-harness "$env:USERPROFILE\.codex\fast-harness"
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 cmd /c mklink /J "$env:USERPROFILE\.agents\skills\fast-harness" "$env:USERPROFILE\.codex\fast-harness\skills"
 ```
 
-Restart Codex. Skills are discovered automatically.
+重启 Codex，skill 自动发现。
 
 ---
 
 ## Gemini CLI
 
-Copy `GEMINI.md` content into your project or user-level `GEMINI.md`:
+将 `GEMINI.md` 内容追加到你的 `GEMINI.md`：
 
 ```bash
 cat GEMINI.md >> ~/.gemini/GEMINI.md
 ```
 
-Or clone and reference directly:
+或克隆后直接引用：
 ```bash
 git clone https://github.com/fast-harness/fast-harness ~/.config/fast-harness
-# Then add to your GEMINI.md:
+# 在 GEMINI.md 中添加：
 # @~/.config/fast-harness/skills/workflow-guide/SKILL.md
 # @~/.config/fast-harness/skills/harness-engineering/SKILL.md
 # @~/.config/fast-harness/skills/tools-reference/SKILL.md
@@ -143,16 +137,16 @@ git clone https://github.com/fast-harness/fast-harness ~/.config/fast-harness
 
 ---
 
-## Project-level Setup
+## 项目级初始化
 
-For each new project, create a minimal `CLAUDE.md` (or equivalent) then run:
+每个新项目创建一个最简配置文件（CLAUDE.md 或对应平台的文件），然后运行：
 
 ```
 /recommend-automations
 ```
 
-This analyzes your project and suggests project-specific hooks, MCP servers, and additional plugins. Run `/update-claude-md` after each session to keep project memory current.
+它会分析你的项目并推荐缺失的 plugin/hook/MCP。每次会话结束后运行 `/update-claude-md` 保持项目记忆更新。
 
-## License
+## 开源协议
 
 MIT
