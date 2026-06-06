@@ -12,17 +12,22 @@
 
 ## 安装
 
-**macOS / Linux：**
+| Agent | 操作 |
+|-------|------|
+| Claude Code | 复制 `CLAUDE.md` 到 `~/.claude/CLAUDE.md` |
+| Codex | 复制 `AGENTS.md` 到项目根目录 |
+| Cursor | 复制 `skills/*` 到 `~/.cursor/skills/` |
+| 其他 Agent | 复制 `AGENTS.md` 到项目根目录 |
+
+**一键安装（macOS/Linux）**，自动处理 Claude Code + Codex：
 ```bash
 curl -fsSL https://raw.githubusercontent.com/agent-rails/agent-rails/main/install.sh | bash
 ```
 
-**Windows（PowerShell）：**
+**一键安装（Windows PowerShell）：**
 ```powershell
 iwr https://raw.githubusercontent.com/agent-rails/agent-rails/main/install.ps1 | iex
 ```
-
-脚本会把本仓库克隆到 `~/.claude/agent-rails`，向 `~/.claude/CLAUDE.md` 添加三行 `@` 导入，如果检测到 Codex 则同时复制 skill 到 `~/.codex/skills/`。完成。
 
 ---
 
@@ -41,34 +46,6 @@ iwr https://raw.githubusercontent.com/agent-rails/agent-rails/main/install.ps1 |
 - **验证门控** — 声明完成前必须运行类型检查 + 关键路径测试
 - **上下文卫生** — 系统提示不包含时间戳，CLAUDE.md 保持 60 行以内，任务切换时开新会话
 - **Karpathy 纪律** — 动手前先想、简单优先、外科手术式修改、目标驱动执行
-
----
-
-## 手动安装
-
-不想跑脚本的话：
-
-**Claude Code** — 克隆并添加到 `~/.claude/CLAUDE.md`：
-```bash
-git clone https://github.com/agent-rails/agent-rails ~/.claude/agent-rails
-```
-```markdown
-# 添加到 ~/.claude/CLAUDE.md
-@./agent-rails/skills/workflow-guide/SKILL.md
-@./agent-rails/skills/harness-engineering/SKILL.md
-@./agent-rails/skills/tools-reference/SKILL.md
-```
-
-**Codex** — 复制 skill 到 `~/.codex/skills/`：
-```bash
-cp -r ~/.claude/agent-rails/skills/workflow-guide ~/.codex/skills/
-cp -r ~/.claude/agent-rails/skills/harness-engineering ~/.codex/skills/
-cp -r ~/.claude/agent-rails/skills/tools-reference ~/.codex/skills/
-```
-
-**其他 agent** — 复制 `AGENTS.md` 到项目根目录。所有原则已内联，无需插件发现机制。
-
----
 
 ## 其他平台
 

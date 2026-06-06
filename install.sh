@@ -16,20 +16,18 @@ else
   git clone "$REPO" "$INSTALL_DIR"
 fi
 
-# Claude Code: add @-imports to CLAUDE.md
+# Claude Code: copy CLAUDE.md (merge if already exists)
 CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
+mkdir -p "$CLAUDE_DIR"
 if grep -q "agent-rails" "$CLAUDE_MD" 2>/dev/null; then
   echo "CLAUDE.md already configured, skipping."
+elif [ -f "$CLAUDE_MD" ]; then
+  echo "" >> "$CLAUDE_MD"
+  cat "$INSTALL_DIR/CLAUDE.md" >> "$CLAUDE_MD"
+  echo "Merged into existing $CLAUDE_MD"
 else
-  mkdir -p "$CLAUDE_DIR"
-  cat >> "$CLAUDE_MD" << 'EOF'
-
-# agent-rails
-@./agent-rails/skills/workflow-guide/SKILL.md
-@./agent-rails/skills/harness-engineering/SKILL.md
-@./agent-rails/skills/tools-reference/SKILL.md
-EOF
-  echo "Added to $CLAUDE_MD"
+  cp "$INSTALL_DIR/CLAUDE.md" "$CLAUDE_MD"
+  echo "Installed $CLAUDE_MD"
 fi
 
 # Codex: copy skills to ~/.codex/skills/

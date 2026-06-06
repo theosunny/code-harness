@@ -16,22 +16,19 @@ if (Test-Path "$installDir\.git") {
     git clone $repo $installDir
 }
 
-# Claude Code: add @-imports to CLAUDE.md
+# Claude Code: copy CLAUDE.md (merge if already exists)
 $claudeMd = "$claudeDir\CLAUDE.md"
+New-Item -ItemType Directory -Force -Path $claudeDir | Out-Null
 $alreadyConfigured = (Test-Path $claudeMd) -and ((Get-Content $claudeMd -Raw) -match "agent-rails")
 if ($alreadyConfigured) {
     Write-Host "CLAUDE.md already configured, skipping."
+} elseif (Test-Path $claudeMd) {
+    Add-Content -Path $claudeMd -Value ""
+    Get-Content "$installDir\CLAUDE.md" | Add-Content -Path $claudeMd
+    Write-Host "Merged into existing $claudeMd"
 } else {
-    New-Item -ItemType Directory -Force -Path $claudeDir | Out-Null
-    $imports = @"
-
-# agent-rails
-@./agent-rails/skills/workflow-guide/SKILL.md
-@./agent-rails/skills/harness-engineering/SKILL.md
-@./agent-rails/skills/tools-reference/SKILL.md
-"@
-    Add-Content -Path $claudeMd -Value $imports
-    Write-Host "Added to $claudeMd"
+    Copy-Item "$installDir\CLAUDE.md" -Destination $claudeMd
+    Write-Host "Installed $claudeMd"
 }
 
 # Codex: copy skills to ~/.codex/skills/

@@ -12,17 +12,22 @@ Works with Claude Code and Codex out of the box. Drop `AGENTS.md` into any proje
 
 ## Install
 
-**macOS / Linux:**
+| Agent | What to do |
+|-------|-----------|
+| Claude Code | Copy `CLAUDE.md` to `~/.claude/CLAUDE.md` |
+| Codex | Copy `AGENTS.md` to your project root |
+| Cursor | Copy `skills/*` to `~/.cursor/skills/` |
+| Any other | Copy `AGENTS.md` to your project root |
+
+**One-liner (macOS/Linux)** — installs for Claude Code + Codex automatically:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/agent-rails/agent-rails/main/install.sh | bash
 ```
 
-**Windows (PowerShell):**
+**One-liner (Windows PowerShell):**
 ```powershell
 iwr https://raw.githubusercontent.com/agent-rails/agent-rails/main/install.ps1 | iex
 ```
-
-The script clones this repo into `~/.claude/agent-rails`, adds three `@`-imports to your `~/.claude/CLAUDE.md`, and copies skills to `~/.codex/skills/` if Codex is installed. That's it.
 
 ---
 
@@ -41,32 +46,6 @@ The script clones this repo into `~/.claude/agent-rails`, adds three `@`-imports
 - **Verification gate** — must run type-check + critical path tests before claiming done
 - **Context hygiene** — no timestamps in system prompts, CLAUDE.md under 60 lines, new session on task switches
 - **Karpathy discipline** — think before coding, simplicity first, surgical changes, goal-driven execution
-
----
-
-## Manual Install
-
-If you prefer not to run the script:
-
-**Claude Code** — clone and add to `~/.claude/CLAUDE.md`:
-```bash
-git clone https://github.com/agent-rails/agent-rails ~/.claude/agent-rails
-```
-```markdown
-# add to ~/.claude/CLAUDE.md
-@./agent-rails/skills/workflow-guide/SKILL.md
-@./agent-rails/skills/harness-engineering/SKILL.md
-@./agent-rails/skills/tools-reference/SKILL.md
-```
-
-**Codex** — copy skills to `~/.codex/skills/`:
-```bash
-cp -r ~/.claude/agent-rails/skills/workflow-guide ~/.codex/skills/
-cp -r ~/.claude/agent-rails/skills/harness-engineering ~/.codex/skills/
-cp -r ~/.claude/agent-rails/skills/tools-reference ~/.codex/skills/
-```
-
-**Other agents** — copy `AGENTS.md` to your project root. All principles are inlined, no discovery needed.
 
 ---
 
