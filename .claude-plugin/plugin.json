@@ -1,9 +1,9 @@
 {
-  "name": "agent-rails",
+  "name": "code-harness",
   "version": "1.0.0",
   "description": "Guardrails for AI coding agents. Three auto-activating skills: full dev lifecycle workflow, harness engineering principles (goal tracking, back-pressure, context hygiene), and tools reference.",
-  "homepage": "https://github.com/agent-rails/agent-rails",
-  "repository": "https://github.com/agent-rails/agent-rails",
+  "homepage": "https://github.com/code-harness/code-harness",
+  "repository": "https://github.com/code-harness/code-harness",
   "license": "MIT",
   "keywords": ["workflow", "agent-rails", "guardrails", "harness-engineering", "claude-code", "codex", "productivity"]
 }

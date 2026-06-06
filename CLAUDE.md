@@ -1,4 +1,4 @@
-# agent-rails
+# code-harness
 
 This is a drop-in `CLAUDE.md` for Claude Code. Copy it to `~/.claude/CLAUDE.md` (global) or your project root.
 

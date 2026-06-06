@@ -1,6 +1,6 @@
-# agent-rails — Agent Instructions
+# code-harness — Agent Instructions
 
-This file embeds the agent-rails workflow and harness engineering principles for agents that use AGENTS.md (OpenAI Codex, and other compatible agents).
+This file embeds the code-harness workflow and harness engineering principles for agents that use AGENTS.md (OpenAI Codex, and other compatible agents).
 
 ## Development Workflow
 
