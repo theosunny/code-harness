@@ -1,9 +1,9 @@
 {
-  "name": "fast-harness",
+  "name": "agent-rails",
   "version": "1.0.0",
-  "description": "Full-lifecycle development workflow with harness engineering principles. Three auto-activating skills covering workflow, context management, and tool reference — built on superpowers and official Claude Code plugins.",
-  "homepage": "https://github.com/fast-harness/fast-harness",
-  "repository": "https://github.com/fast-harness/fast-harness",
+  "description": "Guardrails for AI coding agents. Three auto-activating skills: full dev lifecycle workflow, harness engineering principles (goal tracking, back-pressure, context hygiene), and tools reference.",
+  "homepage": "https://github.com/agent-rails/agent-rails",
+  "repository": "https://github.com/agent-rails/agent-rails",
   "license": "MIT",
-  "keywords": ["workflow", "harness-engineering", "superpowers", "indie-dev", "productivity"]
+  "keywords": ["workflow", "agent-rails", "guardrails", "harness-engineering", "claude-code", "codex", "productivity"]
 }

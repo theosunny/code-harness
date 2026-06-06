@@ -1,10 +1,10 @@
 {
-  "name": "fast-harness",
-  "displayName": "Fast Harness",
-  "description": "Full-lifecycle development workflow with harness engineering principles. Three auto-activating skills: workflow-guide, harness-engineering, tools-reference.",
+  "name": "agent-rails",
+  "displayName": "Agent Rails",
+  "description": "Guardrails for AI coding agents. Three auto-activating skills: full dev lifecycle workflow, harness engineering principles, and tools reference.",
   "version": "1.0.0",
-  "homepage": "https://github.com/fast-harness/fast-harness",
-  "repository": "https://github.com/fast-harness/fast-harness",
+  "homepage": "https://github.com/agent-rails/agent-rails",
+  "repository": "https://github.com/agent-rails/agent-rails",
   "license": "MIT",
-  "keywords": ["workflow", "harness-engineering", "productivity"]
+  "keywords": ["workflow", "agent-rails", "guardrails", "harness-engineering", "productivity"]
 }
