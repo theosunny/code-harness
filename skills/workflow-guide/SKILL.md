@@ -8,22 +8,23 @@ version: 1.0.0
 
 ## Two Paths
 
-**Fast path** (clear, well-scoped features): `/feature-dev <description>` → 7-phase automated workflow
+**Fast path** (clear, well-scoped features):
+Explore codebase → clarify requirements → implement → verify (type-check + tests) → ship.
 
 **Deliberate path** (architecture decisions, multi-system changes):
-1. **Requirements** → `superpowers:brainstorming` — clarify through dialogue, produce a spec doc
-2. **Design done** → `superpowers:writing-plans` — generate a step-by-step implementation plan
-3. **Implementation** → `superpowers:test-driven-development` — write tests first, then code
-4. **Feature complete** → `superpowers:verification-before-completion` — verify before claiming done
-5. **Before merge** → `superpowers:requesting-code-review` — review before merging
-6. **Ship** → `/commit` `/push`
+1. **Requirements** — clarify through dialogue, produce a written spec before any code
+2. **Plan** — break into ordered steps, identify dependencies, estimate risks
+3. **Implementation** — write tests first, then code (TDD)
+4. **Verify** — type-check + critical path tests pass before claiming done
+5. **Review** — get a second read before merging
+6. **Ship** — commit with clear message, push
 
 ## Key Rules
 
-- Bug encountered → `superpowers:systematic-debugging` first, never guess-and-patch
-- Receiving review feedback → `superpowers:receiving-code-review`, never blindly implement
-- 2+ independent tasks → `superpowers:dispatching-parallel-agents`
-- Feature needs isolation → `superpowers:using-git-worktrees`
+- Bug encountered → diagnose root cause first, never guess-and-patch
+- Receiving review feedback → evaluate technically before implementing
+- 2+ independent tasks → work in parallel
+- Feature needs isolation → use git worktrees
 
 ## Coding Discipline (Karpathy Rules)
 

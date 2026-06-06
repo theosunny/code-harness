@@ -1,14 +1,8 @@
-# code-harness
-
-This is a drop-in `CLAUDE.md` for Claude Code. Copy to `~/.claude/CLAUDE.md` (global) or project root.
-
----
-
 ## Development Workflow
 
 ### Two Paths
 
-**Fast path** (clear, well-scoped features): `/feature-dev <description>` — 7-phase automated workflow.
+**Fast path** (clear, well-scoped features): explore → clarify → implement → verify → ship.
 
 **Deliberate path** (architecture decisions, multi-system changes):
 1. Clarify requirements through dialogue before writing any code
@@ -43,8 +37,8 @@ Create a `todo.md` at the start of any multi-step task. Update after each step. 
 - On retry: append a failure summary, do not clear context
 
 ### Context Management
-- Use `/compact` or start a new session when switching to unrelated work
-- Keep this file under 60 lines — use `@`-imports for larger content
+- Compact or start a new session when switching to unrelated work
+- Keep instruction files lean — use imports for larger content
 - Don't pre-install tools speculatively; performance degrades above 15–30 tools
 
 ### Architecture Judgment
